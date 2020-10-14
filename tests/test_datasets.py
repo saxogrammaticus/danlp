@@ -7,7 +7,7 @@ from flair.datasets import ColumnCorpus
 from pyconll.unit import Conll
 from spacy.gold import GoldCorpus
 
-from danlp.datasets import DDT, WikiAnn, DATASETS, DSD, EuroparlSentiment1,EuroparlSentiment2, LccSentiment, TwitterSent
+from danlp.datasets import DDT, WikiAnn, DATASETS, DSD, EuroparlSentiment1,EuroparlSentiment2, LccSentiment, TwitterSent, Dacoref
 from danlp.datasets.word_sim import WordSim353Da
 from danlp.utils import write_simple_ner_dataset, read_simple_ner_dataset
 
@@ -95,35 +95,35 @@ class TestNerDatasets(unittest.TestCase):
 
         self.assertIsInstance(corpus, GoldCorpus)
         self.assertEqual(self.train_len, num_sents_train)
-# temporary omitted due to changes in storage
-#     def test_wikiann_dataset(self):
-#         # Change to a sample of the full wikiann to ease test computation
-#         DATASETS['wikiann']['url'] = "https://danlp.s3.eu-central-1.amazonaws.com/test-datasets/da.tar.gz"
-#         DATASETS['wikiann']['size'] = 2502
-#         DATASETS['wikiann']['md5_checksum'] = 'd0271de38ae23f215b5117450efb9ace'
 
-#         wikiann = WikiAnn()
+    def test_wikiann_dataset(self):
+        # Change to a sample of the full wikiann to ease test computation
+        DATASETS['wikiann']['url'] = "http://danlp-downloads.alexandra.dk/tests/da.tar.gz"
+        DATASETS['wikiann']['size'] = 2502
+        DATASETS['wikiann']['md5_checksum'] = 'd0271de38ae23f215b5117450efb9ace'
 
-#         corpus = wikiann.load_with_flair()
+        wikiann = WikiAnn()
 
-#         self.assertEqual([len(corpus.train), len(corpus.dev), len(corpus.test)], [21, 2, 3])
+        corpus = wikiann.load_with_flair()
 
-#         ner_tags = corpus.make_tag_dictionary('ner').idx2item
-#         asserted_ner_tags = [
-#             b'B-ORG', b'B-PER', b'B-LOC',
-#             b'I-ORG', b'I-PER', b'I-LOC',
-#             b'O', b'<START>', b'<STOP>', b'<unk>'
-#         ]
-#         self.assertCountEqual(ner_tags, asserted_ner_tags)
+        self.assertEqual([len(corpus.train), len(corpus.dev), len(corpus.test)], [21, 2, 3])
 
-#         spacy_gold = wikiann.load_with_spacy()
-#         self.assertIsInstance(spacy_gold, GoldCorpus)
+        ner_tags = corpus.make_tag_dictionary('ner').idx2item
+        asserted_ner_tags = [
+            b'B-ORG', b'B-PER', b'B-LOC',
+            b'I-ORG', b'I-PER', b'I-LOC',
+            b'O', b'<START>', b'<STOP>', b'<unk>'
+        ]
+        self.assertCountEqual(ner_tags, asserted_ner_tags)
 
-#         num_train_sents = len(list(spacy_gold.train_tuples)[0][1])
-#         num_dev_sents = len(list(spacy_gold.dev_tuples)[0][1])
-#         self.assertEqual(num_dev_sents + num_train_sents, 26)
+        spacy_gold = wikiann.load_with_spacy()
+        self.assertIsInstance(spacy_gold, GoldCorpus)
 
-#         shutil.rmtree(wikiann.dataset_dir)
+        num_train_sents = len(list(spacy_gold.train_tuples)[0][1])
+        num_dev_sents = len(list(spacy_gold.dev_tuples)[0][1])
+        self.assertEqual(num_dev_sents + num_train_sents, 26)
+
+        shutil.rmtree(wikiann.dataset_dir)
 
 class TestSimilarityDatasets(unittest.TestCase):
     def test_wordsim353(self):
@@ -159,6 +159,17 @@ class TestSentimentDatasets(unittest.TestCase):
         df = sent.load_with_pandas()
         self.assertEqual(len(df), 499)
        
-       
+    
+class TestCorefDatasets(unittest.TestCase):
+    def test_dacoreg(self):
+        dacoref = Dacoref() 
+        corpus = dacoref.load_as_conllu(predefined_splits=True) 
+        self.assertEqual(len(corpus), 3)
+        self.assertEqual(len(corpus[0])+len(corpus[1])+len(corpus[2]), 3403)
+        self.assertEqual(corpus[0][0][0]['form'], 'På')
+        
+        
+    
+    
 if __name__ == '__main__':
     unittest.main()

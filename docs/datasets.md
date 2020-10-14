@@ -17,6 +17,7 @@ This section keeps a list of Danish NLP datasets publicly available.
 | [WordSim-353](https://github.com/alexandrainst/danlp/blob/master/docs/datasets.md#wordsim-353) | Word Similarity  | 353 | - | [CC BY 4.0](https://github.com/fnielsen/dasem/blob/master/dasem/data/wordsim353-da/LICENSE)| ✔️ |
 | [Danish Similarity Dataset](https://github.com/alexandrainst/danlp/blob/master/docs/datasets.md#danish-similarity-dataset) | Word Similarity  | 99 | - | [CC BY 4.0](https://github.com/fnielsen/dasem/blob/master/dasem/data/wordsim353-da/LICENSE)| ✔️ |
 | [Twitter Sentiment](https://github.com/alexandrainst/danlp/blob/master/docs/datasets.md#Twitter-Sentiment) | Sentiment | - | train: 1215, test: 512 | Twitter privacy policy applies | ✔️ |
+| [Dacoref](https://github.com/alexandrainst/danlp/blob/master/docs/datasets.md#dacoref) | coreference resolution | 64.076 (tokens) | 3.403 | - | ✔️ |
 
 It is also recommend to check out Finn Årup Nielsen's [dasem github](https://github.com/fnielsen/dasem) which also provides script for loading different Danish corpus. 
 
@@ -45,6 +46,23 @@ The dataset can also be downloaded directly in CoNLL-U format.
 
 [Download DDT](https://danlp.alexandra.dk/304bd159d5de/datasets/ddt.zip) 
 
+#### Dacoref
+
+This Danish coreference annotation contains parts of the Copenhagen Dependency Treebank  (Kromann and Lynge (2004), It was originally annotated as part of the Copenhagen Dependency Treebank (CDT) project but never finished. This resource extends the annotation by using different mapping techniques and by augmenting with Qcodes from Wiktionary. This works is conducted by Maria Jung Barrett. Read more about it in the  in the dedicate [dacoref docs]().
+
+The dataset can be load with the DaNLP package:
+
+```python
+from danlp.datasets import Dacoref
+dacoref = Dacoref()
+# The corpus can be loadede with or without splitting into train, dev and test in a list
+corpus = ddt.load_as_conllu(predefined_splits=True) 
+```
+
+The dataset can also be download directly:
+
+[Download dacoref]('http://danlp-downloads.alexandra.dk/datasets/dacoref.zip') 
+
 #### WikiANN
 The WikiANN dataset [(Pan et al. 2017)](https://aclweb.org/anthology/P17-1178) is a dataset with NER annotations 
 for **PER**, **ORG** and **LOC**. It has been constructed using the linked entities in Wikipedia pages for 282 different
@@ -58,7 +76,12 @@ spacy_corpus = wikiann.load_with_spacy()
 flair_corpus = wikiann.load_with_flair()
 ```
 
+#### Dacoref
+
+
+
 #### WordSim-353
+
 The WordSim-353 dataset [(Finkelstein et al. 2002)](http://www.cs.technion.ac.il/~gabr/papers/tois_context.pdf) 
 contains word pairs annotated with a similarity score (1-10). It is common to use it to do intrinsic evaluations 
 on word embeddings to test for syntactic or semantic relationships between words. The dataset has been 
@@ -138,3 +161,4 @@ df = lccsent.load_with_pandas()
 - Xiaoman Pan, Boliang Zhang, Jonathan May, Joel Nothman, Kevin Knight and Heng Ji. 2017. [Cross-lingual Name Tagging and Linking for 282 Languages](https://aclweb.org/anthology/P17-1178). In **ACL**.
 - Lev Finkelstein, Evgeniy Gabrilovich, Yossi Matias, Ehud Rivlin, Zach Solan, Gadi Wolfman, and Eytan Ruppin. 2002. [Placing Search in Context: The Concept Revisited](http://www.cs.technion.ac.il/~gabr/papers/tois_context.pdf). In  **ACM TOIS**.
 - Uwe Quasthoff, Matthias Richter and Christian Biemann. 2006. [Corpus Portal for Search in Monolingual Corpora](https://www.aclweb.org/anthology/L06-1396/). In **LREC**.
+- M.T. Kromann and S.K. Lynge. Danish Dependency Treebank v. 1.0. Department of Computational Linguistics, Copenhagen Business School., 2004. https://github.com/mbkromann/copenhagen-dependency-treebank
