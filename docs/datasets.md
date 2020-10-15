@@ -48,7 +48,7 @@ The dataset can also be downloaded directly in CoNLL-U format.
 
 #### Dacoref
 
-This Danish coreference annotation contains parts of the Copenhagen Dependency Treebank  (Kromann and Lynge (2004), It was originally annotated as part of the Copenhagen Dependency Treebank (CDT) project but never finished. This resource extends the annotation by using different mapping techniques and by augmenting with Qcodes from Wiktionary. This works is conducted by Maria Jung Barrett. Read more about it in the  in the dedicate [dacoref docs]().
+This Danish coreference annotation contains parts of the Copenhagen Dependency Treebank  (Kromann and Lynge (2004), It was originally annotated as part of the Copenhagen Dependency Treebank (CDT) project but never finished. This resource extends the annotation by using different mapping techniques and by augmenting with Qcodes from Wiktionary. This works is conducted by Maria Jung Barrett. Read more about it in the  in the dedicate [dacoref docs](https://github.com/alexandrainst/danlp/master/Add_datasets/docs/dacoref.md).
 
 The dataset can be load with the DaNLP package:
 
@@ -61,7 +61,7 @@ corpus = ddt.load_as_conllu(predefined_splits=True)
 
 The dataset can also be download directly:
 
-[Download dacoref]('http://danlp-downloads.alexandra.dk/datasets/dacoref.zip') 
+[Download dacoref](http://danlp-downloads.alexandra.dk/datasets/dacoref.zip) 
 
 #### WikiANN
 The WikiANN dataset [(Pan et al. 2017)](https://aclweb.org/anthology/P17-1178) is a dataset with NER annotations 
@@ -75,10 +75,6 @@ wikiann = WikiAnn()
 spacy_corpus = wikiann.load_with_spacy()
 flair_corpus = wikiann.load_with_flair()
 ```
-
-#### Dacoref
-
-
 
 #### WordSim-353
 
